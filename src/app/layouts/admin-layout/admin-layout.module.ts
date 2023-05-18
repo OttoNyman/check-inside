@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'; import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -13,6 +13,8 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CheckProductsComponent } from 'src/app/pages/check-products/check-products.component';
+import { CheckCosmeticsComponent } from 'src/app/pages/check-cosmetics/check-cosmetics.component';
+import { OpenAIService } from 'src/app/pages/openai.service';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -25,13 +27,15 @@ import { CheckProductsComponent } from 'src/app/pages/check-products/check-produ
     ClipboardModule
   ],
   declarations: [
+    CheckCosmeticsComponent,
     CheckProductsComponent,
     DashboardComponent,
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
     MapsComponent
-  ]
+  ],
+  providers: [OpenAIService],
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

@@ -6,11 +6,12 @@ import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { CheckProductsComponent } from 'src/app/pages/check-products/check-products.component';
+import { CheckCosmeticsComponent } from 'src/app/pages/check-cosmetics/check-cosmetics.component';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'check-products', component: CheckProductsComponent },
-    { path: 'check-cosmetics', component: MapsComponent },
+    { path: 'check-cosmetics', component: CheckCosmeticsComponent },
     { path: 'check-vitamins', component: MapsComponent },
+    { path: 'check-products', component: CheckProductsComponent },
     { path: 'check-other', component: MapsComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user-profile', component: UserProfileComponent },

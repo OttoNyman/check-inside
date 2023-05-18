@@ -1,0 +1,160 @@
+<div class="header bg-gradient-success pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+            <!-- Card stats -->
+            <div class="row">
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">extra spending</h5>
+                                    <span class="h2 font-weight-bold mb-0">20-40%</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>20-40%</span> -->
+                                <span class="text-nowrap d-block"><strong>of all cosmetics goes to waste</strong></span>
+                                <span class="text-nowrap d-block text-danger">
+                                    <strong>because of the wrong selection</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">intuitive choice</h5>
+                                    <span class="h2 font-weight-bold mb-0">2 / 3</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <!-- <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span> -->
+                                <span class="text-nowrap d-block"><strong>of beauty products are bought</strong></span>
+                                <span class="text-nowrap d-block text-danger"><strong>without any
+                                        consultation</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Cosmetic Allergy</h5>
+                                    <span class="h2 font-weight-bold mb-0">62% of women</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                        <i class="fas fa-percent"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <!-- <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span> -->
+                                <span class="text-nowrap d-block"><strong>are familiar with the problem</strong></span>
+                                <span class="text-nowrap d-block text-danger"><strong>of irritated skin</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">environmental pollution</h5>
+                                    <span class="h2 font-weight-bold mb-0">95%</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
+                                <span class="text-nowrap d-block"><strong>of beauty packaging</strong></span>
+                                <span class="text-nowrap d-block text-danger"><strong>is thrown out after one
+                                        use</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <div class="row d-flex align-items-stretch">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <!-- <h5 class="card-title">Form Controls</h5> -->
+                    <label for="inputName">Paste here</label>
+                    <form *ngFor="let form of forms">
+                        <div class="form-group">
+                            <textarea class="form-control form-control-alternative" rows="9"
+                                placeholder="composition/ingredients..." [(ngModel)]="form.content"
+                                (ngModelChange)="updateFormContent(form, $event)"></textarea>
+                        </div>
+                    </form>
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-icon btn-outline-success mt-sm-3" type="button" (click)="addForm()">
+                            <!-- <span class="btn-inner--text">+</span> -->
+                            <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
+                        </button>
+                        <button class="btn  btn-icon btn-outline-success mt-sm-3" type="button" (click)="removeForm()">
+                            <!-- <span class="btn-inner--text">-</span> -->
+                            <span class="btn-inner--icon"><i class="ni ni-fat-delete"></i></span>
+                        </button>
+                    </div>
+                    <button class="btn btn-block btn-icon btn-success mt-sm-3 justify-content-md-end" type="button"
+                        (click)="analysisComposition()">
+                        <span class="btn-inner--text">Analyse composition</span>
+                        <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
+                    </button>
+                    <button class="btn btn-block btn-icon btn-success mt-sm-3 justify-content-md-end" type="button"
+                        (click)="realAnalysis()">
+                        <span class="btn-inner--text">Real analyse</span>
+                        <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="card">
+                <div class="card-body">
+                    <!-- <h5 class="card-title">Form Controls</h5> -->
+                    <div class="chart">
+                        <canvas id="chart-orders" class="chart-canvas"></canvas>
+                    </div>
+
+                    <form>
+                        <div class="form-group">
+                            <!-- <label for="inputName">Description</label> -->
+                            <!-- <input type="text" class="form-control" id="inputName" placeholder="Copy here" [(ngModel)]="valueExplanation"> -->
+                            <textarea class="form-control form-control-alternative" id="generalDescription" 
+                            [ngModel]="valueExplanation" (ngModelChange)="updateTextareaRows()" 
+                            placeholder="General description"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
