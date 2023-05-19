@@ -106,7 +106,7 @@
                 <div class="card-body">
                     <!-- <h5 class="card-title">Form Controls</h5> -->
                     <label for="inputName">Paste here</label>
-                    <form *ngFor="let form of forms">
+                    <form *ngFor="let form of compositionForms">
                         <div class="form-group">
                             <textarea class="form-control form-control-alternative" rows="9"
                                 placeholder="composition/ingredients..." [(ngModel)]="form.content"
@@ -124,14 +124,19 @@
                         </button>
                     </div>
                     <button class="btn btn-block btn-icon btn-success mt-sm-3 justify-content-md-end" type="button"
-                        (click)="analysisComposition()">
-                        <span class="btn-inner--text">Analyse composition</span>
+                        (click)="fakeCompositionAnalysis()">
+                        <span class="btn-inner--text">Fake composition analysis</span>
                         <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
                     </button>
                     <button class="btn btn-block btn-icon btn-success mt-sm-3 justify-content-md-end" type="button"
-                        (click)="realAnalysis()">
-                        <span class="btn-inner--text">Real analyse</span>
+                        (click)="realCompositionAnalysis()">
+                        <span class="btn-inner--text">Real composition analysis</span>
                         <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
+                    </button>
+                    <button class="btn btn-block btn-icon btn-outline-success mt-sm-3 justify-content-md-end"
+                        type="button" (click)="clearResult()">
+                        <span class="btn-inner--text">Clear results</span>
+                        <!-- <span class="btn-inner--icon"><i class="ni ni-atom"></i></span> -->
                     </button>
                 </div>
             </div>
@@ -141,16 +146,16 @@
                 <div class="card-body">
                     <!-- <h5 class="card-title">Form Controls</h5> -->
                     <div class="chart">
-                        <canvas id="chart-orders" class="chart-canvas"></canvas>
+                        <canvas id="chart" class="chart-canvas"></canvas>
                     </div>
 
                     <form>
                         <div class="form-group">
                             <!-- <label for="inputName">Description</label> -->
                             <!-- <input type="text" class="form-control" id="inputName" placeholder="Copy here" [(ngModel)]="valueExplanation"> -->
-                            <textarea class="form-control form-control-alternative" id="generalDescription" 
-                            [ngModel]="valueExplanation" (ngModelChange)="updateTextareaRows()" 
-                            placeholder="General description"></textarea>
+                            <textarea class="form-control form-control-alternative" id="resultTextarea"
+                                style="height: 157px" (ngModelChange)="updateTextareaRows()"
+                                placeholder="General description"></textarea>
                         </div>
                     </form>
                 </div>
