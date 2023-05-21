@@ -124,13 +124,13 @@
                         </button>
                     </div>
                     <button class="btn btn-block btn-icon btn-success mt-sm-3 justify-content-md-end" type="button"
-                        (click)="fakeCompositionAnalysis()">
-                        <span class="btn-inner--text">Fake composition analysis</span>
+                        (click)="realCompositionAnalysis('cosmetics')">
+                        <span class="btn-inner--text">Real composition analysis</span>
                         <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
                     </button>
                     <button class="btn btn-block btn-icon btn-success mt-sm-3 justify-content-md-end" type="button"
-                        (click)="realCompositionAnalysis()">
-                        <span class="btn-inner--text">Real composition analysis</span>
+                        (click)="fakeCompositionAnalysis()">
+                        <span class="btn-inner--text">Fake analysis</span>
                         <span class="btn-inner--icon"><i class="ni ni-atom"></i></span>
                     </button>
                     <button class="btn btn-block btn-icon btn-outline-success mt-sm-3 justify-content-md-end"
@@ -153,7 +153,7 @@
                         <div class="form-group">
                             <!-- <label for="inputName">Description</label> -->
                             <!-- <input type="text" class="form-control" id="inputName" placeholder="Copy here" [(ngModel)]="valueExplanation"> -->
-                            <textarea class="form-control form-control-alternative" id="resultTextarea"
+                            <textarea class="form-control form-control-alternative text-dark" id="resultTextarea"
                                 style="height: 157px" (ngModelChange)="updateTextareaRows()"
                                 placeholder="General description"></textarea>
                         </div>

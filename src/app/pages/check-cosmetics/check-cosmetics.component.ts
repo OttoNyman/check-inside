@@ -3,15 +3,22 @@ import { Component, OnInit } from '@angular/core';
 import {
 	chartOptions,
 	parseOptions,
-	// chartExample1,
-	// chartExample2,
-	creamAnalyseChart
+	creamAnalyseChart,
+	fakeCreamAnalyseChart
 } from "../../variables/charts";
 import { OpenAIService } from '../openai.service';
 
-export interface FormData {
+interface FormData {
 	id: number;
 	content: string;
+}
+
+type feature = 'nutrition' | 'moisturizing' | 'wrinkle smoothing' | 'anti-acne' | 'sun protection' | 'cleansing' | 'soothing' | 'exfoliating' | 'brightening' | 'strengthening' | 'renewing';
+
+interface productDescription {
+	feature: feature;
+	rate: number;
+	explanation: string;
 }
 
 @Component({
@@ -77,21 +84,70 @@ export class CheckCosmeticsComponent implements OnInit {
 
 	fakeCompositionAnalysis() {
 		this.resultTextarea.value = this.riba;
-		this.compositionChart.options = { ...creamAnalyseChart.options };
-		this.compositionChart.data = { ...creamAnalyseChart.data };
+		this.compositionChart.options = { ...fakeCreamAnalyseChart.options };
+		this.compositionChart.data = { ...fakeCreamAnalyseChart.data };
 		this.compositionChart.update();
 		this.updateTextareaRows();
 	}
 
-	realCompositionAnalysis() {
-		const prompt = `Rate the cosmetic product from 0 - 10 based on the following parameters: nutrition, moisturizing, wrinkle smoothing, anti - acne, sun protection, cleansing, soothing, exfoliating, brightening, strengthening, renewing.Include brief descriptions for each rating.Give answer which looks like: Nutrition--range--description~~Moisturizing--range--description~~and so on. at the end, add a general description for whom cosmetics with this composition are recommended. Composition: `;
-		// const input = someComposition
+	realCompositionAnalysis(promptType: string) {
 		const input = this.compositionForms[0].content;
-		this.openAIService.getOpenAIResponse(prompt, input).then((result) => {
-			const resultObj = result.split('\n\n');
-			console.log(resultObj);
-			this.resultTextarea.value = result;
+		this.openAIService.getOpenAIResponse(promptType, input).then((resp) => {
+			const respArray = resp.split(/\n|~~/).filter(item => item.trim() !== '');
+			const chartLabels: feature[] = [];
+			const chartRates: number[] = [];
+			const chartExplanations: string[] = [];
+			const generalDescription = respArray[respArray.length - 1];
+			// const resultArray: productDescription[] = [];
+			for (let i = 0; i < respArray.length - 1; i++) {
+				const productCharacteristic = respArray[i];
+				// console.log(productCharacteristic);
+				const [feature, rate, explanation] = productCharacteristic.split("--");
+				chartLabels.push(feature.trim() as feature);
+				chartRates.push(+rate);
+				chartExplanations.push(explanation.trim());
+				// const productCharacteristicObject = {
+				// 	feature: feature.trim() as feature,
+				// 	rate: +rate,
+				// 	explanation: explanation.trim()
+				// };
+				// resultArray.push(productCharacteristicObject);
+			}
+
+			this.resultTextarea.value = generalDescription;
 			this.updateTextareaRows();
+
+			const chartData = {
+				labels: chartLabels,
+				datasets: [
+					{
+						label: "Some cool cream",
+						data: chartRates,
+						backgroundColor: "#5e72e4",
+						// indexAxis: "y",
+						maxBarThickness: 5
+					},
+				]
+			};
+			this.compositionChart.data = chartData;
+			this.compositionChart.options = { ...creamAnalyseChart.options };
+			this.compositionChart.options.tooltips.callbacks = {
+				label: function (tooltipItem, data) {
+					const label = data.datasets[tooltipItem.datasetIndex].label || '';
+					const tooltipLines = [label + ':'];
+					const description = chartExplanations[tooltipItem.index];
+					tooltipLines.push(...description.split('\n'));
+					return tooltipLines;
+				}
+				// label: function (tooltipItem, data) {
+				// 	const label = data.datasets[tooltipItem.datasetIndex].label || '';
+				// 	const description = resultArray[tooltipItem.index].explanation;
+				// 	const lines = [label + ':'];
+				// 	lines.push.apply(lines, description.split('\n'));
+				// 	return lines;
+				// }
+			};
+			this.compositionChart.update();
 		});
 	}
 

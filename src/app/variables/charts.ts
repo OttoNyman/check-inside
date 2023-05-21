@@ -158,9 +158,7 @@ var colors = {
 };
 
 export function chartOptions() {
-
-  // Options
-  var options = {
+  const options = {
     defaults: {
       global: {
         responsive: true,
@@ -356,36 +354,32 @@ export const chartExample2 = {
 
 export const creamAnalyseChart = {
   options: {
-    onHover: (event, chartElement) => {
-      
-    },
-    // indexAxis: 'y',
     scales: {
       yAxes: [{
         barPercentage: 0.5
       }]
-      // yAxes: [
-      //   {
-      //     ticks: {
-      //       callback: function (value) {
-      //         if (!(value % 10)) {
-      //           //return '$' + value + 'k'
-      //           return value;
-      //         }
-      //       }
-      //     }
-      //   }
-      // ]
     },
     tooltips: {
+      maxWidth: 200
+    }
+  },
+};
+
+export const fakeCreamAnalyseChart = {
+  options: {
+    scales: {
+      yAxes: [{
+        barPercentage: 0.5
+      }]
+    },
+    tooltips: {
+      maxWidth: 100,
       callbacks: {
-        label: function(tooltipItem, data) {
+        label: function (tooltipItem, data) {
           const label = data.datasets[tooltipItem.datasetIndex].label || '';
           const description = `${tooltipItem.label} (tea tree oil and green tea extract can help soothe irritated skin, but they're way down the list of ingredients)`;
-
           const lines = [label + ':'];
           lines.push.apply(lines, description.split('\n'));
-
           return lines;
         }
       }
