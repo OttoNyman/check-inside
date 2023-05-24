@@ -14,7 +14,9 @@ export class OpenAIService {
 			);
 			const endTime = new Date();
 			const timeDifference = (endTime.getTime() - startTime.getTime()) / 1000;
-			console.log(timeDifference);
+			const tokensQuantity = response?.data?.result?.usage?.total_tokens;
+			console.log('time: ' + timeDifference);
+			console.log('tokens: ' + tokensQuantity);
 			// console.log(response);
 			const result = response?.data?.result?.choices[0]?.message?.content;
 			return result;

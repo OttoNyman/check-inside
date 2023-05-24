@@ -27,25 +27,16 @@ interface productDescription {
 	styleUrls: ['./check-cosmetics.component.scss']
 })
 export class CheckCosmeticsComponent implements OnInit {
+	someComposition = 'Aqua (Water), Ethylhexyl Stearate, Niacinamide, Glycerin, Persea Gratissima (Avocado) Oil, Theobroma Cacao (Cocoa) Seed Butter Butyrospermum Parkii (Shea Butter), Glyceryl Stearate, Cetearyl Alcohol, Mandelic Acid, Lactobionic Acid, Lactic Acid, Pabthenol, Allantoin, Potassium Cetyl Phosphate, Sodium Stearoyl Glutamate, Ammonium Acryloyldimethyltaurate/VP Copolymer, Disodium EDTA, Ethylhexylglycerin, Phenoxyethanol, DMDM Hydantoin, Parfum (Fragrance), Butylphenyl Methylpropional, Hydroxycitronellal, Limonene, Linalool, Citronellol';
+	riba = `Overall, this cosmetic product is best suited for those looking for a hydrating and nourishing cream that also has some exfoliating and soothing properties. However, those with specific concerns such as anti-aging or sun protection should look for additional products to supplement this one. Additionally, some of the fragrance ingredients may cause irritation for those with sensitive skin, so patch testing is recommended. Overall, this product has a good balance of effective ingredients and can be a great addition to a skincare routine.`
+
 	resultTextarea: HTMLTextAreaElement;
 	formCount = 1;
 	data: any;
 	compositionChart;
-	// valueExplanation: string = '';
-	someComposition = 'Aqua (Water), Ethylhexyl Stearate, Niacinamide, Glycerin, Persea Gratissima (Avocado) Oil, Theobroma Cacao (Cocoa) Seed Butter Butyrospermum Parkii (Shea Butter), Glyceryl Stearate, Cetearyl Alcohol, Mandelic Acid, Lactobionic Acid, Lactic Acid, Pabthenol, Allantoin, Potassium Cetyl Phosphate, Sodium Stearoyl Glutamate, Ammonium Acryloyldimethyltaurate/VP Copolymer, Disodium EDTA, Ethylhexylglycerin, Phenoxyethanol, DMDM Hydantoin, Parfum (Fragrance), Butylphenyl Methylpropional, Hydroxycitronellal, Limonene, Linalool, Citronellol';
-	riba = `Для состава А6 я бы расставила оценки следующим образом:
-	Питание - 3 (в составе нет особо питательных ингредиентов, таких как масла или богатые витаминами компоненты);
-	Увлажнение - 7 (глицерин находится на 2-ом месте в списке ингредиентов, что говорит о его высоком содержании, и присутствует несколько других увлажняющих компонентов);
-	Борьба с морщинами - 4 (в составе есть ингредиенты, такие как пантенол и витамин С, которые могут помочь в борьбе с морщинами, но они находятся далеко в списке ингредиентов, что может указывать на их низкую концентрацию);
-	Противодействие акне - 8 (в составе есть несколько активных компонентов, таких как экстракт чая, масло чайного дерева и азелоилдиглицинат, которые могут помочь в борьбе с акне);
-		Защита от солнца - 1 (в составе нет ингредиентов, обеспечивающих защиту от ультрафиолетовых лучей);
-		Очищение - 8 (в составе есть несколько очищающих ингредиентов, таких как натрия лауретсульфат, кокамидопропилбетаин и сульфат натрия кокоамфоацетат);
-		Успокоение - 5 (масло чайного дерева и экстракт зеленого чая могут помочь успокоить раздраженную кожу, но они находятся далеко в списке ингредиентов);
-		Отшелушивание - 3 (несмотря на присутствие некоторых кислот, таких как аскорбиновая кислота и лактобионовая кислота, они находятся далеко в списке ингредиентов, что указывает на низкую концентрацию);
-		Разглаживание - 5 (в составе есть несколько ингредиентов, таких как пантенол и глицерин, которые могут помочь разгладить кожу, но они находятся далеко в списке ингредиентов);
-		Осветление - 4 (в составе есть витамин С, который может помочь осветлить пигментацию, но он находится далеко в списке ингредиентов, что указывает на низкую концентрацию);`;
-
 	compositionForms: FormData[] = [{ id: 1, content: this.someComposition }];
+	// valueExplanation: string = '';
+
 	constructor(
 		public openAIService: OpenAIService,
 	) { }
@@ -55,7 +46,7 @@ export class CheckCosmeticsComponent implements OnInit {
 		const chart = document.getElementById('chart');
 		parseOptions(Chart, chartOptions());
 		this.compositionChart = new Chart(chart, {
-			type: 'bar',
+			type: 'horizontalBar',
 			// options: creamAnalyseChart.options,
 			// data: creamAnalyseChart.data
 		});
@@ -133,19 +124,14 @@ export class CheckCosmeticsComponent implements OnInit {
 			this.compositionChart.options = { ...creamAnalyseChart.options };
 			this.compositionChart.options.tooltips.callbacks = {
 				label: function (tooltipItem, data) {
+					// const label = chartLabels[tooltipItem.index];
 					const label = data.datasets[tooltipItem.datasetIndex].label || '';
-					const tooltipLines = [label + ':'];
+					const rate = chartRates[tooltipItem.index];
 					const description = chartExplanations[tooltipItem.index];
+					const tooltipLines = [`${label}: ${rate}/10`];
 					tooltipLines.push(...description.split('\n'));
 					return tooltipLines;
 				}
-				// label: function (tooltipItem, data) {
-				// 	const label = data.datasets[tooltipItem.datasetIndex].label || '';
-				// 	const description = resultArray[tooltipItem.index].explanation;
-				// 	const lines = [label + ':'];
-				// 	lines.push.apply(lines, description.split('\n'));
-				// 	return lines;
-				// }
 			};
 			this.compositionChart.update();
 		});

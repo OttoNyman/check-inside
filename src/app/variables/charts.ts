@@ -368,7 +368,7 @@ export const creamAnalyseChart = {
 export const fakeCreamAnalyseChart = {
   options: {
     scales: {
-      yAxes: [{
+      xAxes: [{
         barPercentage: 0.5
       }]
     },
